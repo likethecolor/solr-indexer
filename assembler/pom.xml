@@ -1,0 +1,210 @@
+<!--
+  Copyright (c) 2018.  Dan Brown <dan.brown@likethecolor.com>
+  <p/>
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License.  You may obtain a copy
+  of the License at
+  <p/>
+  http://www.apache.org/licenses/LICENSE-2.0
+  <p/>
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+  License for the specific language governing permissions and limitations under
+  the License.
+  -->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.likethecolor</groupId>
+    <artifactId>solr-indexer-parent</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>solr-indexer-assembler</artifactId>
+  <packaging>jar</packaging>
+  <name>assembler</name>
+
+  <properties>
+    <dot.git.directory>${project.basedir}/../.git</dot.git.directory>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.likethecolor</groupId>
+      <artifactId>solr-indexer</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven.jar.plugin.version}</version>
+        <configuration>
+          <finalName>ltc-solr-indexer-${project.version}</finalName>
+          <archive>
+            <manifest>
+              <mainClass>com.likethecolor.solr.indexer.Indexer</mainClass>
+              <addClasspath>false</addClasspath>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>${maven.shade.plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <excludes>
+                  <exclude>ant:ant</exclude>
+                  <exclude>aopalliance:aopalliance</exclude>
+                  <exclude>hsqldb:hsqldb</exclude>
+                  <exclude>javax*:*</exclude>
+                  <exclude>jline:jline</exclude>
+                  <exclude>net.java.dev.jets3t:*</exclude>
+                  <exclude>org.apache.hadoop.thirdparty.guava:guava</exclude>
+                  <exclude>org.apache.hadoop:hadoop-core</exclude>
+                  <exclude>org.codehaus.jackson:*</exclude>
+                  <exclude>org.codehaus.woodstox:*</exclude>
+                  <exclude>org.eclipse.jdt:*</exclude>
+                  <exclude>org.jboss.netty:*</exclude>
+                  <exclude>org.mortbay.jetty:*</exclude>
+                  <exclude>oro:oro</exclude>
+                  <exclude>tomcat:*</exclude>
+                  <exclude>xmlenc:xmlenc</exclude>
+
+                  <exclude>commons-codec:*</exclude>
+                  <exclude>commons-el:*</exclude>
+                  <exclude>commons-httpclient:*</exclude>
+                  <exclude>commons-lang:*</exclude>
+                  <exclude>commons-logging:*</exclude>
+                  <exclude>commons-net:*</exclude>
+                  <exclude>org.springframework:spring-aop</exclude>
+                </excludes>
+              </artifactSet>
+              <transformers>
+                <transformer
+                    implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"></transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/spring.factories</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/spring.handlers</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/spring.schemas</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/spring.tooling</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>log4j.properties</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>logback.xml</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>com.likethecolor.solr.indexer.Indexer</Main-Class>
+                    <X-Compile-Source-JDK>${java.source.version}</X-Compile-Source-JDK>
+                    <X-Compile-Target-JDK>${java.target.version}</X-Compile-Target-JDK>
+                  </manifestEntries>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>.options</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>bin.tgz</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>configuration.properties</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>core-default.xml</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>hadoop-metrics.properties</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>hdfs-default.xml</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>mapred-default.xml</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>test-data.csv</resource>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- See: https://github.com/ktoso/maven-git-commit-id-plugin
+            http://jira.likethecolor.com/browse/SEARCH-1639
+        -->
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>${maven.git.plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+          </execution>
+        </executions>
+
+        <configuration>
+          <!-- that's the default value, you don't have to set it -->
+          <!-- <prefix>git</prefix> -->
+
+          <!-- that's the default value -->
+          <!-- <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat> -->
+
+          <!-- false is default here, it prints some more information during the build -->
+          <verbose>true</verbose>
+
+          <!--
+            If you'd like to tell the plugin where your .git directory is,
+            use this setting, otherwise we'll perform a search trying to
+            figure out the right directory. It's better to add it explicite IMHO.
+            -->
+          <dotGitDirectory>${dot.git.directory}</dotGitDirectory>
+
+          <!-- ALTERNATE SETUP - GENERATE FILE -->
+          <!--
+            If you want to keep git information, even in your WAR file etc,
+            use this mode, which will generate a properties file (with filled out values)
+            which you can then normally read using new Properties().load(/**/)
+            -->
+
+          <!--
+            this is true by default; You may want to set this to false, if the plugin should run inside a
+            <packaging>pom</packaging> project. Most projects won't need to override this property.
+
+            For an use-case for this kind of behaviour see: https://github.com/ktoso/maven-git-commit-id-plugin/issues/21
+            -->
+          <skipPoms>true</skipPoms>
+
+          <!-- this is false by default, forces the plugin to generate the git.properties file -->
+          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+
+          <!-- The path for the to be generated properties file, it's relative to ${project.basedir} -->
+          <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,374 @@
+<!--
+  Copyright (c) 2018.  Dan Brown <dan.brown@likethecolor.com>
+  <p/>
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License.  You may obtain a copy
+  of the License at
+  <p/>
+  http://www.apache.org/licenses/LICENSE-2.0
+  <p/>
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+  License for the specific language governing permissions and limitations under
+  the License.
+  -->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.likethecolor</groupId>
+  <artifactId>solr-indexer-parent</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>Command line indexer for Solr</name>
+
+  <properties>
+    <dot.git.directory>${project.basedir}/.git</dot.git.directory>
+
+    <java.source.version>1.8</java.source.version>
+    <java.target.version>1.8</java.target.version>
+
+    <solr.indexer.version>${project.version}</solr.indexer.version>
+    
+    <httpcomponents.httpclient.version>4.5.6</httpcomponents.httpclient.version>
+    <httpcomponents.httpcore.version>4.4.10</httpcomponents.httpcore.version>
+    <httpcomponents.httpmime.version>4.5.6</httpcomponents.httpmime.version>
+    <commons-cli.version>1.4</commons-cli.version>
+    <commons-io.version>2.6</commons-io.version>
+    <commons-logging.version>1.2</commons-logging.version>
+    <json.version>20180813</json.version>
+    <junit.version>4.12</junit.version>
+    <log4j.version>2.11.1</log4j.version>
+    <mockito.core.version>2.21.0</mockito.core.version>
+    <netty.version>3.10.6.Final</netty.version>
+    <noggit.version>0.8</noggit.version>
+    <slf4j.version>1.7.25</slf4j.version>
+    <solrj.version>7.4.0</solrj.version>
+    <super.csv.version>2.4.0</super.csv.version>
+    <zookeeper.version>3.4.13</zookeeper.version>
+
+    <maven.dependency.plugin.version>3.11</maven.dependency.plugin.version>
+    <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+    <maven.git.plugin.version>2.2.5</maven.git.plugin.version>
+    <maven.jar.plugin.version>3.1.0</maven.jar.plugin.version>
+    <maven.javadoc.plugin.version>3.0.1</maven.javadoc.plugin.version>
+    <maven.shade.plugin.version>3.1.1</maven.shade.plugin.version>
+    <maven.source.plugin.version>3.0.1</maven.source.plugin.version>
+    <maven.surefire.junit.plugin.version>2.22.0</maven.surefire.junit.plugin.version>
+    <maven.surefire.report.plugin.version>2.22.0</maven.surefire.report.plugin.version>
+    <maven.surefire.plugin.version>2.22.0</maven.surefire.plugin.version>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <modules>
+    <module>indexer</module>
+    <module>assembler</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- ******************************************************************* -->
+      <!-- CSV -->
+      <dependency>
+        <groupId>net.sf.supercsv</groupId>
+        <artifactId>super-csv</artifactId>
+        <version>${super.csv.version}</version>
+      </dependency>
+
+      <!-- ******************************************************************* -->
+      <!-- SOLR -->
+      <dependency>
+        <groupId>org.apache.solr</groupId>
+        <artifactId>solr-solrj</artifactId>
+        <version>${solrj.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.solr</groupId>
+        <artifactId>solr-solrj-client</artifactId>
+        <version>${solrj.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.zookeeper</groupId>
+        <artifactId>zookeeper</artifactId>
+        <version>${zookeeper.version}</version>
+      </dependency>
+
+      <!-- ******************************************************************* -->
+      <!-- APACHE/COMMONS -->
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpcomponents.httpclient.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpcore</artifactId>
+        <version>${httpcomponents.httpcore.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpmime</artifactId>
+        <version>${httpcomponents.httpmime.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-cli</groupId>
+        <artifactId>commons-cli</artifactId>
+        <version>${commons-cli.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+        <type>jar</type>
+      </dependency>
+
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty</artifactId>
+        <version>${netty.version}</version>
+      </dependency>
+
+      <!-- ******************************************************************* -->
+      <!-- JSON/STREAMING -->
+      <dependency>
+        <groupId>org.noggit</groupId>
+        <artifactId>noggit</artifactId>
+        <version>${noggit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>${json.version}</version>
+      </dependency>
+
+      <!-- ******************************************************************* -->
+      <!-- Logging with SLF4J & Log4J -->
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>${commons-logging.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jul-to-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>${maven.git.plugin.version}</version>
+      </dependency>
+
+      <!-- ******************************************************************* -->
+      <!-- Testing -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.core.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <!--<includes>-->
+        <!--<include>**/*.properties</include>-->
+        <!--</includes>-->
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+        <configuration>
+          <source>${java.source.version}</source>
+          <target>${java.target.version}</target>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- See: https://github.com/ktoso/maven-git-commit-id-plugin -->
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>${maven.git.plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+          </execution>
+        </executions>
+
+        <configuration>
+          <!-- that's the default value, you don't have to set it -->
+          <!-- <prefix>git</prefix> -->
+
+          <!-- that's the default value -->
+          <!-- <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat> -->
+
+          <!-- false is default here, it prints some more information during the build -->
+          <verbose>true</verbose>
+
+          <!--
+            If you'd like to tell the plugin where your .git directory is,
+            use this setting, otherwise we'll perform a search trying to
+            figure out the right directory. It's better to add it explicitly IMHO.
+          -->
+          <dotGitDirectory>${dot.git.directory}</dotGitDirectory>
+
+          <!-- ALTERNATE SETUP - GENERATE FILE -->
+          <!--
+            If you want to keep git information, even in your WAR file etc,
+            use this mode, which will generate a properties file (with filled out values)
+            which you can then normally read using new Properties().load(/**/)
+          -->
+
+          <!--
+            this is true by default; You may want to set this to false, if the plugin should run inside a
+            <packaging>pom</packaging> project. Most projects won't need to override this property.
+
+            For an use-case for this kind of behaviour see: https://github.com/ktoso/maven-git-commit-id-plugin/issues/21
+          -->
+          <skipPoms>true</skipPoms>
+
+          <!-- this is false by default, forces the plugin to generate the git.properties file -->
+          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+
+          <!-- The path for the to be generated properties file, it's relative to ${project.basedir} -->
+          <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven.jar.plugin.version}</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>com.likethecolor.solr-indexer.Main</mainClass>
+              <addClasspath>false</addClasspath>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <!-- NOTE: We don't need a groupId specification because the group is
+             org.apache.maven.plugins (which is assumed by default)
+        -->
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven.javadoc.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${maven.source.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>gen-src-pkg</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+              <goal>test-jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.surefire.plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit4</artifactId>
+            <version>${maven.surefire.junit.plugin.version}</version>
+          </dependency>
+        </dependencies>
+
+        <configuration>
+          <systemProperties>
+            <!-- This file can be created and it will be used for unit tests
+                 instead of the production log4j.properties file: src/test/resources/log4j.properties
+                 This is useful for separating the two for different environments -->
+            <property>
+              <name>log4j.configuration</name>
+              <value>log4j.properties</value>
+            </property>
+
+            <property>
+              <name>java.util.logging.config.file</name>
+              <value>${project.build.directory}/test-classes/logging.properties</value>
+            </property>
+          </systemProperties>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>${maven.surefire.report.plugin.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>

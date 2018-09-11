@@ -1,0 +1,22 @@
+
+configured (future jdbc)
+
+documentation
+- in code, comments
+- update existing google doc
+
+done: rework using a "data-type" parameter how csv, json, jdbc, etc data sources are
+
+done: remove job type
+
+done: "processed 7000000 documents" - add total indexing time to the log msg
+
+done: soft commit - after every batch, after every X batches, never
+
+done: remove rollback
+
+done: option to soft commit between batches
+
+done: calculated using a class - in fact, for geo, the ip_range_id could be calculated using a class
+interface - (configuration, solrinputdoc)
+
