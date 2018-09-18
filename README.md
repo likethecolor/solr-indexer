@@ -65,6 +65,8 @@ The second column of data contains a `csv-delimiter`.  So that the system parses
 * data type: string
 * default value: n/a
 
+	**REQUIRED**
+
 Tells the indexer the format of the source data file.  The value can be either `csv` or `json`.
 
 ### dynamic-fields
